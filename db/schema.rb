@@ -10,10 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_13_085659) do
+ActiveRecord::Schema.define(version: 2020_12_13_104420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "subtodos", force: :cascade do |t|
+    t.string "title"
+    t.boolean "completed"
+    t.bigint "todo_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["todo_id"], name: "index_subtodos_on_todo_id"
+  end
+
+  create_table "todos", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "deadline"
+    t.boolean "completed"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_todos_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -23,4 +43,6 @@ ActiveRecord::Schema.define(version: 2020_12_13_085659) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "subtodos", "todos"
+  add_foreign_key "todos", "users"
 end
