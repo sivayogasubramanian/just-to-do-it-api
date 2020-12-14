@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_secure_password
+  
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   
   has_many :todos, dependent: :delete_all
@@ -13,6 +15,4 @@ class User < ApplicationRecord
   
   validates :password, length: { minimum: 6, on: :create, on: :update }
   validates :password_confirmation, presence: { on: :create, on: :update }
-  
-  has_secure_password
 end
