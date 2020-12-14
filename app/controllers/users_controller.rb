@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  # FOR DEV 
+  skip_before_action :authenticate_request, only: [:index]
+  
+  skip_before_action :authenticate_request, only: [:create]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
@@ -16,9 +20,9 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
     if @user.save
-      render json: @user, status: :created, location: @user
+      token = AuthenticateUser.call(@user.email, @user.password).result
+      render json: {token: token}, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -27,7 +31,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: @user
+      render json: {message: "Account updated succesfully!"}, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -35,7 +39,12 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    if @user
+      @user.destroy
+      render json: {message: "Account deleted succesfully!"}, status: :ok
+    else
+      render json: {message: "Unable to delete account!"}, status: :bad_request
+    end
   end
 
   private
@@ -46,6 +55,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end
