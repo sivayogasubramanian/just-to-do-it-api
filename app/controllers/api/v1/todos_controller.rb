@@ -5,7 +5,7 @@ module Api
 
       # GET /todos
       def index
-        @todos = Todo.all
+        @todos = current_user.todos
 
         render json: @todos
       end
@@ -17,10 +17,10 @@ module Api
 
       # POST /todos
       def create
-        @todo = Todo.new(todo_params)
+        @todo = current_user.todos.new(todo_params)
 
         if @todo.save
-          render json: @todo, status: :created, location: @todo
+          render json: @todo, status: :created
         else
           render json: @todo.errors, status: :unprocessable_entity
         end
@@ -37,7 +37,12 @@ module Api
 
       # DELETE /todos/1
       def destroy
-        @todo.destroy
+        if @todo
+          @todo.destroy
+          render json: {message: "Todo deleted succesfully!"}, status: :ok
+        else
+          render json: {message: "Unable to Todo!"}, status: :bad_request
+        end
       end
 
       private
@@ -48,7 +53,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def todo_params
-          params.fetch(:todo, {})
+          params.require(:todo).permit(:title, :description, :deadline, :completed, :user_id)
         end
     end
   end
