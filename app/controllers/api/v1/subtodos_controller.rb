@@ -1,6 +1,5 @@
 module Api 
   module V1
-
     class SubtodosController < ApplicationController
       before_action :set_subtodo, only: [:show, :update, :destroy]
 
