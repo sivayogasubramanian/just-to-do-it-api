@@ -6,12 +6,12 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @users
+    render json: UserSerializer.new(@users).serialized_json
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: UserSerializer.new(@user).serialized_json
   end
 
   # POST /users
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       token = AuthenticateUser.call(@user.email, @user.password).result
-      render json: {token: token}, status: :created
+      render json: {message: "Account created succesfully!", token: token}, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors.messages, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: {message: "Account updated succesfully!"}, status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors.messages, status: :unprocessable_entity
     end
   end
 

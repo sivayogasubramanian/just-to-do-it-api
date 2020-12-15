@@ -7,12 +7,12 @@ module Api
       def index
         @todos = current_user.todos
 
-        render json: @todos
+        render json: TodoSerializer.new(@todos, options).serialized_json
       end
 
       # GET /todos/1
       def show
-        render json: @todo
+        render json: TodoSerializer.new(@todo, options).serialized_json
       end
 
       # POST /todos
@@ -20,18 +20,18 @@ module Api
         @todo = current_user.todos.new(todo_params)
 
         if @todo.save
-          render json: @todo, status: :created
+          render json: TodoSerializer.new(@todo).serialized_json, status: :created
         else
-          render json: @todo.errors, status: :unprocessable_entity
+          render json: @todo.errors.messages, status: :unprocessable_entity
         end
       end
 
       # PATCH/PUT /todos/1
       def update
         if @todo.update(todo_params)
-          render json: @todo
+          render json: TodoSerializer.new(@todo, options).serialized_json
         else
-          render json: @todo.errors, status: :unprocessable_entity
+          render json: @todo.errors.messages, status: :unprocessable_entity
         end
       end
 
@@ -41,7 +41,7 @@ module Api
           @todo.destroy
           render json: {message: "Todo deleted succesfully!"}, status: :ok
         else
-          render json: {message: "Unable to Todo!"}, status: :bad_request
+          render json: {message: "Unable to delete Todo!"}, status: :bad_request
         end
       end
 
@@ -54,6 +54,10 @@ module Api
         # Only allow a list of trusted parameters through.
         def todo_params
           params.require(:todo).permit(:title, :description, :deadline, :completed, :user_id)
+        end
+
+        def options
+          @options ||= {include: %i[subtodos]}
         end
     end
   end

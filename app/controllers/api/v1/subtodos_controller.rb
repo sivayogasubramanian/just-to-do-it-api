@@ -8,12 +8,12 @@ module Api
       def index
         @subtodos = @todo.subtodos
 
-        render json: @subtodos
+        render json: SubtodoSerializer.new(@subtodos).serialized_json
       end
 
       # GET /subtodos/1
       def show
-        render json: @subtodo
+        render json: SubtodoSerializer.new(@subtodo).serialized_json
       end
 
       # POST /subtodos
@@ -21,18 +21,18 @@ module Api
         @subtodo = @todo.subtodos.new(subtodo_params)
 
         if @subtodo.save
-          render json: @subtodo, status: :created
+          render json: SubtodoSerializer.new(@subtodo).serialized_json, status: :created
         else
-          render json: @subtodo.errors, status: :unprocessable_entity
+          render json: @subtodo.errors.messages, status: :unprocessable_entity
         end
       end
 
       # PATCH/PUT /subtodos/1
       def update
         if @subtodo.update(subtodo_params)
-          render json: @subtodo
+          render json: SubtodoSerializer.new(@subtodo).serialized_json
         else
-          render json: @subtodo.errors, status: :unprocessable_entity
+          render json: @subtodo.errors.messages, status: :unprocessable_entity
         end
       end
 
@@ -42,7 +42,7 @@ module Api
           @subtodo.destroy
           render json: {message: "Subtodo deleted succesfully!"}, status: :ok
         else
-          render json: {message: "Unable to Subtodo!"}, status: :bad_request
+          render json: {message: "Unable to delete Subtodo!"}, status: :bad_request
         end
       end
 
