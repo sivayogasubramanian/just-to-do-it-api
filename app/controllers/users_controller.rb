@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       token = AuthenticateUser.call(@user.email, @user.password).result
-      render json: {message: "Account created succesfully!", token: token}, status: :created
+      render json: { message: "Account created succesfully!", token: token }, status: :created
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: {message: "Account updated succesfully!"}, status: :ok
+      render json: { message: "Account updated succesfully!" }, status: :ok
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end
@@ -38,9 +38,9 @@ class UsersController < ApplicationController
   def destroy
     if @user
       @user.destroy
-      render json: {message: "Account deleted succesfully!"}, status: :ok
+      render json: { message: "Account deleted succesfully!" }, status: :ok
     else
-      render json: {message: "Unable to delete account!"}, status: :bad_request
+      render json: { message: "Unable to delete account!" }, status: :bad_request
     end
   end
 
@@ -52,6 +52,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.permit(:name, :email, :password, :password_confirmation)
     end
 end

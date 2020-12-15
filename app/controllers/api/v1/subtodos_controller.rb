@@ -40,9 +40,9 @@ module Api
       def destroy
         if @subtodo
           @subtodo.destroy
-          render json: {message: "Subtodo deleted succesfully!"}, status: :ok
+          render json: { message: "Subtodo deleted succesfully!" }, status: :ok
         else
-          render json: {message: "Unable to delete Subtodo!"}, status: :bad_request
+          render json: { message: "Unable to delete Subtodo!" }, status: :bad_request
         end
       end
 
@@ -58,7 +58,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def subtodo_params
-          params.require(:subtodo).permit(:title, :completed, :todo_id)
+          params.permit(:title, :completed, :todo_id)
         end
     end
   end

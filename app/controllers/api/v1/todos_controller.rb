@@ -39,9 +39,9 @@ module Api
       def destroy
         if @todo
           @todo.destroy
-          render json: {message: "Todo deleted succesfully!"}, status: :ok
+          render json: { message: "Todo deleted succesfully!" }, status: :ok
         else
-          render json: {message: "Unable to delete Todo!"}, status: :bad_request
+          render json: { message: "Unable to delete Todo!" }, status: :bad_request
         end
       end
 
@@ -53,7 +53,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def todo_params
-          params.require(:todo).permit(:title, :description, :deadline, :completed, :user_id)
+          params.permit(:title, :description, :deadline, :completed, :user_id)
         end
 
         def options
