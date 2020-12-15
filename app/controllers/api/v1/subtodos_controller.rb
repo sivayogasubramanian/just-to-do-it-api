@@ -23,7 +23,7 @@ module Api
         if @subtodo.save
           render json: SubtodoSerializer.new(@subtodo).serialized_json, status: :created
         else
-          render json: @subtodo.errors.messages, status: :unprocessable_entity
+          render json: @subtodo.errors.full_messages, status: :unprocessable_entity
         end
       end
 
@@ -32,7 +32,7 @@ module Api
         if @subtodo.update(subtodo_params)
           render json: SubtodoSerializer.new(@subtodo).serialized_json
         else
-          render json: @subtodo.errors.messages, status: :unprocessable_entity
+          render json: @subtodo.errors.full_messages, status: :unprocessable_entity
         end
       end
 

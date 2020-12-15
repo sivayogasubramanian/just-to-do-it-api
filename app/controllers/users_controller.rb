@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       token = AuthenticateUser.call(@user.email, @user.password).result
       render json: {message: "Account created succesfully!", token: token}, status: :created
     else
-      render json: @user.errors.messages, status: :unprocessable_entity
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: {message: "Account updated succesfully!"}, status: :ok
     else
-      render json: @user.errors.messages, status: :unprocessable_entity
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
