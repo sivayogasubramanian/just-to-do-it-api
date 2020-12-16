@@ -13,6 +13,6 @@ class User < ApplicationRecord
                               "#{data[:value]} is already taken. Please login instead."
                            end }
   
-  validates :password, length: { minimum: 6, on: :create, on: :update }
+  validates :password, length: { in: 6..15 }
   validates :password_confirmation, presence: { on: :create, on: :update }
 end
