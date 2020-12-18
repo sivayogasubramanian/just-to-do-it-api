@@ -19,7 +19,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       token = AuthenticateUser.call(@user.email, @user.password).result
-      render json: { message: "Account created succesfully!", token: token }, status: :created
+      render json: { message: "Account created succesfully!", 
+                     token: token, 
+                     user: UserSerializer.new(@user) }, 
+                     status: :created
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end
