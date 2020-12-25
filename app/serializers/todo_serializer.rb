@@ -1,6 +1,6 @@
 class TodoSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :title, :description, :deadline, :completed, :user_id
+  attributes :title, :description, :deadline, :completed, :tags
 
   has_many :subtodos
 end
