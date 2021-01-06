@@ -7,11 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-<<<<<<< HEAD
     origins 'https://just-to-do-it-website.netlify.app'
-=======
-    origins 'https://just-to-do-it-website.netlify.app/'
->>>>>>> a1257f22a4b0c5ddc5ded7bb92cab0dc0d220402
 
     resource '*',
       headers: :any,
@@ -19,11 +15,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-<<<<<<< HEAD
     origins 'http://localhost:3000'
-=======
-    origins 'http://localhost:3000/'
->>>>>>> a1257f22a4b0c5ddc5ded7bb92cab0dc0d220402
 
     resource '*',
       headers: :any,
