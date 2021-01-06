@@ -1,1 +1,0 @@
-web: bundle exec puma -p 4000 -e development
