@@ -17,7 +17,7 @@ gem 'puma', '~> 5.4'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # 3 gems for JWT authentication
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.18'
 gem 'jwt'
 gem 'simple_command'
 
