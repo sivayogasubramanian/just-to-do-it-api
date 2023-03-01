@@ -91,7 +91,7 @@ GEM
     mini_portile2 (2.5.3)
     minitest (5.14.4)
     msgpack (1.4.2)
-    nio4r (2.5.7)
+    nio4r (2.5.8)
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
@@ -99,7 +99,7 @@ GEM
       racc (~> 1.4)
     pg (1.2.3)
     pg (1.2.3-x64-mingw32)
-    puma (5.4.0)
+    puma (6.1.1)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -165,7 +165,7 @@ DEPENDENCIES
   hirb (~> 0.7.3)
   jwt
   pg (~> 1.1)
-  puma (~> 5.4)
+  puma (~> 6.1)
   rack-cors
   rails (~> 6.1.4)
   simple_command
